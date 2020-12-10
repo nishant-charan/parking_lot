@@ -4,7 +4,7 @@ public class ParkingLot {
 
     private Integer parkingId;
     private Boolean isAvailable;
-    private ParkingTicket parkingTicket;
+    private String vehicleNumber;
 
     public ParkingLot(Integer parkingId) {
         this.parkingId = parkingId;
@@ -27,11 +27,11 @@ public class ParkingLot {
         isAvailable = available;
     }
 
-    public ParkingTicket getParkingTicket() {
-        return parkingTicket;
+    public String getVehicleNumber() {
+        return vehicleNumber;
     }
 
-    public void setParkingTicket(ParkingTicket parkingTicket) {
-        this.parkingTicket = parkingTicket;
+    public void setVehicleNumber(String vehicleNumber) {
+        this.vehicleNumber = vehicleNumber;
     }
 }
