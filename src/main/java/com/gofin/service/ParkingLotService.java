@@ -2,11 +2,37 @@ package com.gofin.service;
 
 import com.gofin.model.ParkingLot;
 
+import java.io.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ParkingLotService {
 
-    public List<ParkingLot> createParkingLotSpace(List<ParkingLot> parkingLotList, Integer parkingSpace) {
+    public static List<ParkingLot> parkingLots = new ArrayList<>();
+
+    public void readCommandFile(File file) throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
+
+        String command;
+        while ((command = bufferedReader.readLine()) != null) {
+            String[] commandSplit = command.split("\\s+");
+            if (command.contains("create_parking_lot")) {
+                int parkingSpace = Integer.parseInt(commandSplit[1]);
+                createParkingLotSpace(parkingLots, parkingSpace);
+            } else if (command.contains("park")) {
+                String registrationNumber = commandSplit[1];
+                parkVehicle(parkingLots, registrationNumber);
+            } else if (command.contains("leave")) {
+                String registrationNumber = commandSplit[1];
+                float hours = Float.parseFloat(commandSplit[2]);
+                leaveVehicle(parkingLots, registrationNumber, hours);
+            } else if (command.contains("status")) {
+                getParkingLotStatus(parkingLots);
+            }
+        }
+    }
+
+    protected List<ParkingLot> createParkingLotSpace(List<ParkingLot> parkingLotList, Integer parkingSpace) {
         int lastParkingId = parkingLotList.size() + 1;
         for (int index = 0; index < parkingSpace; index++) {
             ParkingLot parkingLot = new ParkingLot(lastParkingId + index);
@@ -16,7 +42,7 @@ public class ParkingLotService {
         return parkingLotList;
     }
 
-    public void getParkingLotStatus(List<ParkingLot> parkingLotList) {
+    protected void getParkingLotStatus(List<ParkingLot> parkingLotList) {
         System.out.println("Slot No. \t Registration No.");
         if (parkingLotList.size() > 0) {
             parkingLotList.stream().forEach(parkingLot -> {
@@ -29,7 +55,7 @@ public class ParkingLotService {
         }
     }
 
-    public boolean parkVehicle(List<ParkingLot> parkingLotList, String vehicleNumber) {
+    protected boolean parkVehicle(List<ParkingLot> parkingLotList, String vehicleNumber) {
         boolean isParked = false;
         if (parkingLotList.size() > 0) {
             for (ParkingLot parkingLot : parkingLotList) {
@@ -49,7 +75,7 @@ public class ParkingLotService {
         return isParked;
     }
 
-    public boolean leaveVehicle(List<ParkingLot> parkingLotList, String registrationNumber, Float hours) {
+    protected boolean leaveVehicle(List<ParkingLot> parkingLotList, String registrationNumber, Float hours) {
         boolean isLeft = false;
         if (parkingLotList.size() > 0) {
             for (ParkingLot parkingLot : parkingLotList) {
@@ -70,8 +96,8 @@ public class ParkingLotService {
         return isLeft;
     }
 
-    private Integer parkingCostCalculation(Float hours) {
-        Integer parkingCost;
+    private int parkingCostCalculation(Float hours) {
+        int parkingCost;
         if (hours <= 2) {
             parkingCost = 10;
         } else {

@@ -1,8 +1,7 @@
-package com.gofin;
+package com.gofin.service;
 
 
 import com.gofin.model.ParkingLot;
-import com.gofin.service.ParkingLotService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -13,8 +12,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class ParkingLotServiceTest {
 
-    private ParkingLotService parkingLotService = new ParkingLotService();
-
+    private final ParkingLotService parkingLotService = new ParkingLotService();
 
     @Test
     @DisplayName("Test to check create parking lot space logic")
