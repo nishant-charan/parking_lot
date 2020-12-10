@@ -3,12 +3,10 @@ package com.gofin.model;
 public class ParkingLot {
 
     private Integer parkingId;
-    private Boolean isAvailable;
-    private String vehicleNumber;
+    private String registrationNumber;
 
     public ParkingLot(Integer parkingId) {
         this.parkingId = parkingId;
-        this.isAvailable = true;
     }
 
     public Integer getParkingId() {
@@ -19,19 +17,21 @@ public class ParkingLot {
         this.parkingId = parkingId;
     }
 
-    public Boolean getAvailable() {
-        return isAvailable;
+
+    public String getRegistrationNumber() {
+        return registrationNumber;
     }
 
-    public void setAvailable(Boolean available) {
-        isAvailable = available;
+    public void setRegistrationNumber(String registrationNumber) {
+        this.registrationNumber = registrationNumber;
     }
 
-    public String getVehicleNumber() {
-        return vehicleNumber;
-    }
-
-    public void setVehicleNumber(String vehicleNumber) {
-        this.vehicleNumber = vehicleNumber;
+    public boolean isVehicleParked(String registrationNumber) {
+        boolean flag = false;
+        if (this.registrationNumber != null
+                && this.registrationNumber.equals(registrationNumber)) {
+            flag = true;
+        }
+        return flag;
     }
 }
