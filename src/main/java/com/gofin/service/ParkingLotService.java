@@ -14,6 +14,7 @@ public class ParkingLotService {
     public static List<ParkingLot> parkingLots = new ArrayList<>();
 
     public void readCommandFile(File file) throws IOException {
+        logger.info("Reading input file for commands");
         BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
         String command;
         while ((command = bufferedReader.readLine()) != null) {
@@ -40,16 +41,16 @@ public class ParkingLotService {
             ParkingLot parkingLot = new ParkingLot(lastParkingId + index);
             parkingLotList.add(parkingLot);
         }
-        logger.info("Created parking lot with " + parkingSpace + " slots");
+        System.out.println("Created parking lot with " + parkingSpace + " slots");
         return parkingLotList;
     }
 
     protected void getParkingLotStatus(List<ParkingLot> parkingLotList) {
-        logger.info("Slot No. \t Registration No.");
+        System.out.println("Slot No. \t Registration No.");
         if (parkingLotList.size() > 0) {
             parkingLotList.stream().forEach(parkingLot -> {
                 if (parkingLot.getRegistrationNumber() != null) {
-                    logger.info(parkingLot.getParkingId() + " \t " + parkingLot.getRegistrationNumber());
+                    System.out.println(parkingLot.getParkingId() + " \t " + parkingLot.getRegistrationNumber());
                 }
             });
         } else {
@@ -63,13 +64,13 @@ public class ParkingLotService {
             for (ParkingLot parkingLot : parkingLotList) {
                 if (parkingLot.getRegistrationNumber() == null) {
                     parkingLot.setRegistrationNumber(vehicleNumber);
-                    logger.info("Allocated Slot Number : " + parkingLot.getParkingId());
+                    System.out.println("Allocated Slot Number : " + parkingLot.getParkingId());
                     isParked = true;
                     break;
                 }
             }
             if (!isParked) {
-                logger.info("Sorry, parking lot is full");
+                System.out.println("Sorry, parking lot is full");
             }
         } else {
             logger.warning("No parking lot created");
@@ -84,13 +85,13 @@ public class ParkingLotService {
                 if (parkingLot.isVehicleParked(registrationNumber)) {
                     parkingLot.setRegistrationNumber(null);
                     isLeft = true;
-                    logger.info("Registration number " + registrationNumber + " with Slot Number " + parkingLot.getParkingId()
+                    System.out.println("Registration number " + registrationNumber + " with Slot Number " + parkingLot.getParkingId()
                             + " is free with Charge " + parkingCostCalculation(hours));
                     break;
                 }
             }
             if (!isLeft) {
-                logger.info("Registration number " + registrationNumber + " not found");
+                System.out.println("Registration number " + registrationNumber + " not found");
             }
         } else {
             logger.warning("No parking lot created");
