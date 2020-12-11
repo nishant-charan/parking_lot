@@ -7,9 +7,9 @@ Assumptions :
 4. The registration number cannot be same for two vehicles
 
 Tools Used :
-Java 8
-Maven
-JUnit 5
+1. Java 8
+2. Maven
+3. JUnit 5
 
 Commands for running :
 Compile and running the test cases -> mvn clean install
