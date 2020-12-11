@@ -5,8 +5,11 @@ import com.gofin.service.ParkingLotService;
 import java.io.File;
 import java.io.IOException;
 import java.util.Scanner;
+import java.util.logging.Logger;
 
 public class ParkingLotApplication {
+
+    private static Logger logger = Logger.getLogger(ParkingLotApplication.class.getName());
 
     public static void main(String [] args) {
         ParkingLotService parkingLotService = new ParkingLotService();
@@ -18,7 +21,7 @@ public class ParkingLotApplication {
             File file =  new File(inFile);
             parkingLotService.readCommandFile(file);
         } catch (IOException ex) {
-            System.out.println("Error reading file due to " + ex);
+            logger.warning("Error reading file due to " + ex);
         }
 
     }
